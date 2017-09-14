@@ -1,6 +1,7 @@
 import { ENVIRONMENT } from './environment';
 
 /**
+ * @internal
  * Build stringmap object to be injected when creates runtime for asm module.
  * Modularized asm module generated via MODULARIZE=1 accepts object as its creation function allow to attach
  * properties. Using those, this function construct few essential convinient functions like awaitable runtime init.
