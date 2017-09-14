@@ -1,4 +1,5 @@
 import { ENVIRONMENT } from './environment';
+import { log } from './util/logger';
 
 /**
  * @internal
@@ -39,12 +40,14 @@ export const constructModule = (
   //otherwise set default to locateFile on node.js.
   //Browser environment doesn't set custom locateFile if binaryEndpoint is not set.
   if (!!binaryEndpoint) {
+    log(`constructModule: binaryEndpoint found, set locateFile using endpoint`);
     ret.locateFile = (fileName: string) =>
       environment === ENVIRONMENT.NODE
         ? //tslint:disable-next-line:no-require-imports
           require('path').join(binaryEndpoint, fileName)
         : `${binaryEndpoint}/${fileName}`;
   } else if (environment === ENVIRONMENT.NODE) {
+    log(`constructModule: default locateFile set using binary path`, asmDir || __dirname);
     //tslint:disable-next-line:no-require-imports
     ret.locateFile = (fileName: string) => require('path').join(asmDir || __dirname, fileName);
   }
@@ -63,6 +66,7 @@ export const constructModule = (
       ret.onRuntimeInitialized = () => {
         clearTimeout(timeoutId);
         ret.__asm_module_isInitialized__ = true;
+        log(`initializeRuntime: successfully initialized module`);
         resolve(true);
       };
     });

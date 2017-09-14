@@ -1,10 +1,7 @@
 import { constructModule } from './constructModule';
 import { ENVIRONMENT } from './environment';
 import { isNode } from './util/isNode';
-
-const log = (..._args: Array<any>) => {
-  //noop
-};
+import { log } from './util/logger';
 
 type stringMap = { [key: string]: any };
 
