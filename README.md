@@ -11,10 +11,9 @@ Wraps up common initialization logic with predefined preprocessor object.
 # Usage
 
 ```js
-import { getModuleLoader } from 'emscripten-wasm-loader`;
+import { getModuleLoader } from 'emscripten-wasm-loader';
 
 const loader = getModuleLoader(factoryLoader, {dir: 'path', runtimeModule: require('wasm/wasmlibaray') }, { additional: ''});
-
 ```
 
 `getModuleLoader` is higher order function returns actual module loader.
