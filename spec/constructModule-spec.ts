@@ -8,6 +8,7 @@ describe('constructModule', () => {
     const module = constructModule(injected, ENVIRONMENT.BROWSER, null);
 
     expect(module).contains(injected);
+    expect(module).to.have.property('ENVIRONMENT');
   });
 
   it('should set locateFile when endpoint not specified on node', () => {
