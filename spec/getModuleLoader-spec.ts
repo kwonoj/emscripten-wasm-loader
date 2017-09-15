@@ -83,7 +83,7 @@ describe('getModuleLoader', () => {
 
     let thrown = false;
     try {
-      await loader(null as any, ENVIRONMENT.BROWSER);
+      await loader(null as any, ENVIRONMENT.WEB);
     } catch (e) {
       expect(e).to.be.a('error');
       thrown = true;

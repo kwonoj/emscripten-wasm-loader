@@ -64,13 +64,13 @@ const getModuleLoader: getModuleLoaderType = <T, R extends AsmRuntimeType>(
   asm: { dir: string | null; runtimeModule: runtimeModuleType },
   module?: stringMap
 ) => async (binaryEndpoint?: string, environment?: ENVIRONMENT) => {
-  const env = environment ? environment : isNode() ? ENVIRONMENT.NODE : ENVIRONMENT.BROWSER;
+  const env = environment ? environment : isNode() ? ENVIRONMENT.NODE : ENVIRONMENT.WEB;
   const asmBinaryDir = env === ENVIRONMENT.NODE ? asm.dir : null;
 
   log(`loadModule: ${environment ? `using environment override ${environment}` : `running environment is ${env}`}`);
   log(`loadModule: will load wasm binary from ${asmBinaryDir ? asmBinaryDir : 'browser endpoint'}`);
 
-  if (!binaryEndpoint && env === ENVIRONMENT.BROWSER) {
+  if (!binaryEndpoint && env === ENVIRONMENT.WEB) {
     throw new Error('Cannot download binary module without endpoint on browser');
   }
 
