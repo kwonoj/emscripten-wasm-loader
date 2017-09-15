@@ -36,6 +36,7 @@ export const constructModule = (
   //If binaryEndpoint provided, consider it as override behavior and set locateFile fn
   //otherwise set default to locateFile on node.js.
   //Browser environment doesn't set custom locateFile if binaryEndpoint is not set.
+  //https://kripken.github.io/emscripten-site/docs/api_reference/module.html#Module.locateFile
   if (!!binaryEndpoint) {
     log(`constructModule: binaryEndpoint found, set locateFile using endpoint`);
     ret.locateFile = (fileName: string) =>
