@@ -1,3 +1,13 @@
+<a name="0.0.2"></a>
+## [0.0.2](https://github.com/kwonoj/emscripten-wasm-loader/compare/v0.0.1...v0.0.2) (2017-09-15)
+
+
+### Bug Fixes
+
+* **asmruntimetype:** fix interface type ([cd087b1](https://github.com/kwonoj/emscripten-wasm-loader/commit/cd087b1))
+
+
+
 <a name="0.0.1"></a>
 ## 0.0.1 (2017-09-15)
 

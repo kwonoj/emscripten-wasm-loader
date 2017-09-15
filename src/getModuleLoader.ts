@@ -23,7 +23,7 @@ type moduleLoaderType<T> = (binaryEndpoint?: string, environment?: ENVIRONMENT) 
  * `initializeRuntime` is injected via `constructModule` for awaitable module initialization.
  */
 interface AsmRuntimeType {
-  initializeRuntime: () => Promise<void>;
+  initializeRuntime: () => Promise<boolean>;
 }
 
 /**
