@@ -75,7 +75,7 @@ const getModuleLoader: getModuleLoaderType = <T, R extends AsmRuntimeType>(
   }
 
   const constructedModule = constructModule(module || {}, env, asmBinaryDir, binaryEndpoint);
-  log(`loadModule: module object for asm runtime constructed`, constructedModule);
+  log(`loadModule: module object for asm runtime constructed`);
   const asmModule = asm.runtimeModule(constructedModule);
 
   await asmModule.initializeRuntime();
