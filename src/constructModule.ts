@@ -27,14 +27,10 @@ export const constructModule = (
   const ret = {
     ...value,
     __asm_module_isInitialized__: false,
-    locateFile: (_fileName: string) => {
-      /*noop*/
-    },
-    onRuntimeInitialized: () => {
-      /*noop*/
-    },
-    initializeRuntime: () => Promise.resolve(true)
-  };
+    locateFile: null,
+    onRuntimeInitialized: null,
+    initializeRuntime: null
+  } as any;
 
   //If binaryEndpoint provided, consider it as override behavior and set locateFile fn
   //otherwise set default to locateFile on node.js.
@@ -72,5 +68,8 @@ export const constructModule = (
     });
   };
 
-  return ret;
+  return ret as {
+    locateFile: (fileName: string) => string;
+    initializeRuntime: () => Promise<boolean>;
+  };
 };
