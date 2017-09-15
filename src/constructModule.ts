@@ -29,7 +29,8 @@ export const constructModule = (
     __asm_module_isInitialized__: false,
     locateFile: null,
     onRuntimeInitialized: null,
-    initializeRuntime: null
+    initializeRuntime: null,
+    ENVIRONMENT: environment
   } as any;
 
   //If binaryEndpoint provided, consider it as override behavior and set locateFile fn
