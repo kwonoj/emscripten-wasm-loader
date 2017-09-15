@@ -5,7 +5,7 @@ import { ENVIRONMENT } from '../src/environment';
 describe('constructModule', () => {
   it('should inherit injected object', () => {
     const injected = { a: 1 };
-    const module = constructModule(injected, ENVIRONMENT.BROWSER, null);
+    const module = constructModule(injected, ENVIRONMENT.WEB, null);
 
     expect(module).contains(injected);
     expect(module).to.have.property('ENVIRONMENT');
@@ -26,7 +26,7 @@ describe('constructModule', () => {
   });
 
   it('should not set locateFile when endpoint not specified on browser', () => {
-    const module = constructModule({}, ENVIRONMENT.BROWSER, null);
+    const module = constructModule({}, ENVIRONMENT.WEB, null);
 
     expect(module.locateFile).to.not.exist;
   });
@@ -43,7 +43,7 @@ describe('constructModule', () => {
   });
 
   it('should set locateFile when endpoint set on browser', () => {
-    const module = constructModule({}, ENVIRONMENT.BROWSER, null, 'end');
+    const module = constructModule({}, ENVIRONMENT.WEB, null, 'end');
     const file = module.locateFile('file');
 
     expect(file).to.equal('end/file');
@@ -51,7 +51,7 @@ describe('constructModule', () => {
 
   describe('initializeRuntime', () => {
     it('should be awaitable to initialize runtime', async () => {
-      const module = constructModule({}, ENVIRONMENT.BROWSER, null);
+      const module = constructModule({}, ENVIRONMENT.WEB, null);
 
       //onRuntimeInitialized is callback called inside of preamble init, we just call it to check logic
       setTimeout(() => (module as any).onRuntimeInitialized(), 10);
@@ -64,7 +64,7 @@ describe('constructModule', () => {
     it('should fail if init take too long', async () => {
       jest.useFakeTimers();
 
-      const module = constructModule({}, ENVIRONMENT.BROWSER, null);
+      const module = constructModule({}, ENVIRONMENT.WEB, null);
       const initPromise = module.initializeRuntime();
 
       jest.runAllTimers();

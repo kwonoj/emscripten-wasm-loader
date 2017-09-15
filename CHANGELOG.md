@@ -1,3 +1,13 @@
+<a name="0.0.5"></a>
+## [0.0.5](https://github.com/kwonoj/emscripten-wasm-loader/compare/v0.0.4...v0.0.5) (2017-09-15)
+
+
+### Bug Fixes
+
+* **environment:** correct environement for emscripten preamble ([8a65acf](https://github.com/kwonoj/emscripten-wasm-loader/commit/8a65acf))
+
+
+
 <a name="0.0.4"></a>
 ## [0.0.4](https://github.com/kwonoj/emscripten-wasm-loader/compare/v0.0.3...v0.0.4) (2017-09-15)
 
