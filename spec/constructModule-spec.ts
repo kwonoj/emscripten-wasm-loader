@@ -70,5 +70,53 @@ describe('constructModule', () => {
       jest.runAllTimers();
       expect(await initPromise).to.be.false;
     });
+
+    it('should accept custom timeout', async () => {
+      jest.useFakeTimers();
+
+      const module = constructModule({}, ENVIRONMENT.WEB, null);
+      const initPromise = module.initializeRuntime(100);
+
+      jest.runTimersToTime(110);
+      expect(await initPromise).to.be.false;
+    });
+
+    it('should reject when aborted', async () => {
+      jest.useFakeTimers();
+      const module = constructModule({}, ENVIRONMENT.WEB, null);
+
+      let thrown = false;
+      try {
+        const init = module.initializeRuntime();
+
+        //onAbort is callback called inside of preamble init, we just call it to check logic
+        setTimeout(() => (module as any).onAbort('meh'), 100);
+        jest.runTimersToTime(110);
+        await init;
+      } catch (e) {
+        expect(e).to.be.a('Error');
+        thrown = true;
+      }
+      expect(thrown).to.be.true;
+    });
+
+    it('should reject when aborted with error', async () => {
+      jest.useFakeTimers();
+      const module = constructModule({}, ENVIRONMENT.WEB, null);
+
+      let thrown = false;
+      try {
+        const init = module.initializeRuntime();
+
+        //onAbort is callback called inside of preamble init, we just call it to check logic
+        setTimeout(() => (module as any).onAbort(new Error('meh')), 100);
+        jest.runTimersToTime(110);
+        await init;
+      } catch (e) {
+        expect(e).to.be.a('Error');
+        thrown = true;
+      }
+      expect(thrown).to.be.true;
+    });
   });
 });
