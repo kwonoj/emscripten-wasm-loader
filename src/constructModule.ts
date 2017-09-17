@@ -51,15 +51,19 @@ export const constructModule = (
   }
 
   //export initializeRuntime interface for awaitable runtime initialization
-  ret.initializeRuntime = () => {
+  ret.initializeRuntime = (timeout: number = 3000) => {
     if (ret.__asm_module_isInitialized__) {
       return Promise.resolve(true);
     }
 
-    return new Promise(function(resolve, _reject) {
-      let timeoutId = setTimeout(function() {
-        resolve(false);
-      }, 3000);
+    return new Promise((resolve, reject) => {
+      const timeoutId = setTimeout(() => resolve(false), timeout);
+
+      ret.onAbort = (reason: Error | any) => {
+        clearTimeout(timeoutId);
+        log(`initializeRuntime: failed to initialize module`, reason);
+        reject(reason instanceof Error ? reason : new Error(reason));
+      };
 
       ret.onRuntimeInitialized = () => {
         clearTimeout(timeoutId);
@@ -72,6 +76,6 @@ export const constructModule = (
 
   return ret as {
     locateFile: (fileName: string) => string;
-    initializeRuntime: () => Promise<boolean>;
+    initializeRuntime: (timeout?: number) => Promise<boolean>;
   };
 };
