@@ -1,3 +1,14 @@
+<a name="0.0.7"></a>
+## [0.0.7](https://github.com/kwonoj/emscripten-wasm-loader/compare/v0.0.6...v0.0.7) (2017-09-17)
+
+
+### Features
+
+* **constructmodule:** wire onAbort callback ([6440650](https://github.com/kwonoj/emscripten-wasm-loader/commit/6440650))
+* **loadmodule:** enhance error handling ([4f3004f](https://github.com/kwonoj/emscripten-wasm-loader/commit/4f3004f))
+
+
+
 <a name="0.0.6"></a>
 ## [0.0.6](https://github.com/kwonoj/emscripten-wasm-loader/compare/v0.0.5...v0.0.6) (2017-09-17)
 

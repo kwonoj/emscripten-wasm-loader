@@ -104,4 +104,20 @@ describe('getModuleLoader', () => {
     expect(mockConstructModule.mock.calls[0][2]).to.deep.equal('asmBoo');
     expect(loaded).to.equal('boo');
   });
+
+  it('should throw when init runtime fail', async () => {
+    mockIsNode.mockReturnValueOnce(true);
+
+    const runtimeModule = jest.fn(() => ({ initializeRuntime: () => Promise.reject(new Error('meh')) }));
+
+    const loader = getModuleLoader(null as any, { dir: null, runtimeModule: runtimeModule as any });
+    let thrown = false;
+    try {
+      await loader('bin');
+    } catch (e) {
+      expect(e).to.be.a('Error');
+      thrown = true;
+    }
+    expect(thrown).to.be.true;
+  });
 });

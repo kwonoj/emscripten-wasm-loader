@@ -75,13 +75,19 @@ const getModuleLoader: getModuleLoaderType = <T, R extends AsmRuntimeType>(
   }
 
   const constructedModule = constructModule(module || {}, env, asmBinaryDir, binaryEndpoint);
-  log(`loadModule: module object for asm runtime constructed`);
-  const asmModule = asm.runtimeModule(constructedModule);
+  log(`loadModule: constructed module object for runtime`);
 
-  await asmModule.initializeRuntime();
-  log(`loadModule: initialized wasm binary Runtime`);
+  try {
+    const asmModule = asm.runtimeModule(constructedModule);
+    await asmModule.initializeRuntime();
 
-  return factoryLoader(asmModule as R, env) as T;
+    log(`loadModule: initialized wasm binary Runtime`);
+
+    return factoryLoader(asmModule as R, env) as T;
+  } catch (e) {
+    log(`loadModule: failed to initialize wasm binary runtime`);
+    throw e;
+  }
 };
 
 export { AsmRuntimeType, stringMap, runtimeModuleType, moduleLoaderType, getModuleLoaderType, getModuleLoader };
