@@ -40,7 +40,7 @@ interface AsmRuntimeType {
 type runtimeModuleType = (moduleObject: stringMap) => AsmRuntimeType;
 
 type getModuleLoaderType = <T, R extends AsmRuntimeType>(
-  factoryLoader: (runtime: R) => T,
+  factoryLoader: (runtime: R, environment: ENVIRONMENT) => T,
   asm: { dir: string | null; runtimeModule: runtimeModuleType },
   module?: stringMap
 ) => moduleLoaderType<T>;
@@ -60,7 +60,7 @@ type getModuleLoaderType = <T, R extends AsmRuntimeType>(
  * @returns {moduleLoaderType<T>} Loader function
  */
 const getModuleLoader: getModuleLoaderType = <T, R extends AsmRuntimeType>(
-  factoryLoader: (runtime: R) => T,
+  factoryLoader: (runtime: R, environment: ENVIRONMENT) => T,
   asm: { dir: string | null; runtimeModule: runtimeModuleType },
   module?: stringMap
 ) => async (binaryEndpoint?: string, environment?: ENVIRONMENT) => {
@@ -81,7 +81,7 @@ const getModuleLoader: getModuleLoaderType = <T, R extends AsmRuntimeType>(
   await asmModule.initializeRuntime();
   log(`loadModule: initialized wasm binary Runtime`);
 
-  return factoryLoader(asmModule as R) as T;
+  return factoryLoader(asmModule as R, env) as T;
 };
 
 export { AsmRuntimeType, stringMap, runtimeModuleType, moduleLoaderType, getModuleLoaderType, getModuleLoader };
