@@ -56,13 +56,17 @@ export const constructModule = (
       return Promise.resolve(true);
     }
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _reject) => {
       const timeoutId = setTimeout(() => resolve(false), timeout);
 
+      //trap out preamble `abort()` function to avoid too verbose exception details
+      //but only for initialization phase. Other errors will be thrown by postamble.js.
       ret.onAbort = (reason: Error | any) => {
-        clearTimeout(timeoutId);
-        log(`initializeRuntime: failed to initialize module`, reason);
-        reject(reason instanceof Error ? reason : new Error(reason));
+        if (!ret.__asm_module_isInitialized__) {
+          clearTimeout(timeoutId);
+          log(`initializeRuntime: failed to initialize module`, reason);
+          throw reason instanceof Error ? reason : new Error(reason);
+        }
       };
 
       ret.onRuntimeInitialized = () => {
