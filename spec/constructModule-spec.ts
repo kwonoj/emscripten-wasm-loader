@@ -100,7 +100,7 @@ describe('constructModule', () => {
       expect(thrown).to.be.true;
     });
 
-    it('should reject when aborted with error', async () => {
+    it('should trap out early when aborted while initialize runtime', async () => {
       jest.useFakeTimers();
       const module = constructModule({}, ENVIRONMENT.WEB, null);
 
@@ -117,6 +117,26 @@ describe('constructModule', () => {
         thrown = true;
       }
       expect(thrown).to.be.true;
+    });
+
+    it('should not trap when aborted after init', async () => {
+      jest.useFakeTimers();
+      const module = constructModule({}, ENVIRONMENT.WEB, null);
+
+      let thrown = false;
+      try {
+        const init = module.initializeRuntime();
+        (module as any).onRuntimeInitialized();
+
+        //onAbort is callback called inside of preamble init, we just call it to check logic
+        setTimeout(() => (module as any).onAbort(new Error('meh')), 100);
+        jest.runTimersToTime(110);
+        await init;
+      } catch (e) {
+        thrown = true;
+      }
+      //postamble.js will throw, so onAbort doesn't throw explicitly
+      expect(thrown).to.be.false;
     });
   });
 });
