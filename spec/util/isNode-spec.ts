@@ -1,21 +1,14 @@
-//tslint:disable:no-require-imports
 import { expect } from 'chai';
-import isNodeType = require('../../src/util/isNode');
+import { root } from 'getroot';
+import { isNode } from '../../src/util/isNode';
+
+jest.mock('getroot', () => ({ root: {} }));
 
 describe('isNode', () => {
-  let isNode: typeof isNodeType.isNode;
-  let root: any;
-
-  beforeEach(() => {
-    jest.mock('getroot', () => ({ root: {} }));
-    isNode = require('../../src/util/isNode').isNode;
-    root = require('getroot').root;
-  });
-
   it('should return true if node specific object found', () => {
     root.process = {
       versions: {
-        node: 7
+        node: 8
       }
     };
 
