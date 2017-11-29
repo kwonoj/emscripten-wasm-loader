@@ -1,23 +1,14 @@
 import { expect } from 'chai';
 import { ENVIRONMENT } from '../src/environment';
-//tslint:disable-next-line:no-require-imports
-import getModuleLoaderType = require('../src/getModuleLoader');
+import { getModuleLoader } from '../src/getModuleLoader';
+
+jest.mock('../src/util/isNode');
+jest.mock('../src/constructModule');
+
+//tslint:disable-next-line:no-require-imports no-var-requires
+const mockIsNode = require('../src/util/isNode').isNode as jest.Mock<any>;
 
 describe('getModuleLoader', () => {
-  let getModuleLoader: getModuleLoaderType.getModuleLoaderType;
-  let mockIsNode: jest.Mock<any>;
-  let mockConstructModule: jest.Mock<any>;
-
-  beforeEach(() => {
-    mockIsNode = jest.fn();
-    mockConstructModule = jest.fn();
-    jest.mock('../src/util/isNode', () => ({ isNode: mockIsNode }));
-    jest.mock('../src/constructModule', () => ({ constructModule: mockConstructModule }));
-
-    //tslint:disable-next-line:no-require-imports
-    getModuleLoader = require('../src/getModuleLoader').getModuleLoader;
-  });
-
   it('should create loader function with node environment', async () => {
     mockIsNode.mockReturnValueOnce(true);
 

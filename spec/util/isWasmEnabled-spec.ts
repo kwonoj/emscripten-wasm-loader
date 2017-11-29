@@ -1,17 +1,10 @@
-//tslint:disable:no-require-imports
 import { expect } from 'chai';
-import isWasmEnabledType = require('../../src/util/isWasmEnabled');
+import { root } from 'getroot';
+import { isWasmEnabled } from '../../src/util/isWasmEnabled';
+
+jest.mock('getroot', () => ({ root: {} }));
 
 describe('isWasmEnabled', () => {
-  let isWasmEnabled: typeof isWasmEnabledType.isWasmEnabled;
-  let root: any;
-
-  beforeEach(() => {
-    jest.mock('getroot', () => ({ root: {} }));
-    isWasmEnabled = require('../../src/util/isWasmEnabled').isWasmEnabled;
-    root = require('getroot').root;
-  });
-
   it('should return true if native wasm object found', () => {
     root.WebAssembly = {
       compile: {},
@@ -22,7 +15,7 @@ describe('isWasmEnabled', () => {
   });
 
   it('should return false if native wasm object not found', () => {
-    root.WebAssembly = {};
+    root.WebAssembly = null;
 
     expect(isWasmEnabled()).to.be.false;
   });
