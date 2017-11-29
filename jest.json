@@ -33,7 +33,6 @@
     "<rootDir>/node_modules/",
     "<rootDir>/spec/.*\\.(ts|js)$",
     "<rootDir>/build/.*\\.(ts|js)$",
-    "./src/wasmType.ts",
     "./src/environment.ts"
   ]
 }

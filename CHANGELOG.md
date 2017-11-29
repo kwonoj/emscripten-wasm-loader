@@ -1,3 +1,18 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/kwonoj/emscripten-wasm-loader/compare/v0.0.8...v1.0.0) (2017-11-29)
+
+
+### Features
+
+* **getmoduleloader:** drop custom binarypath support ([2f9fb92](https://github.com/kwonoj/emscripten-wasm-loader/commit/2f9fb92))
+
+
+### BREAKING CHANGES
+
+* **getmoduleloader:** Loader now accepts single file, native wasm module only
+
+
+
 <a name="0.0.8"></a>
 ## [0.0.8](https://github.com/kwonoj/emscripten-wasm-loader/compare/v0.0.7...v0.0.8) (2017-09-18)
 

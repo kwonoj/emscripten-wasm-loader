@@ -18,91 +18,66 @@ describe('getModuleLoader', () => {
     getModuleLoader = require('../src/getModuleLoader').getModuleLoader;
   });
 
-  it('should create loader function', async () => {
+  it('should create loader function with node environment', async () => {
     mockIsNode.mockReturnValueOnce(true);
 
     const factoryLoader = jest.fn(() => 'boo');
     const mockRuntime = { initializeRuntime: () => Promise.resolve(true) };
     const runtimeModule = jest.fn(() => mockRuntime);
 
-    const loader = getModuleLoader(factoryLoader as any, { dir: null, runtimeModule: runtimeModule as any });
+    const loader = getModuleLoader(factoryLoader as any, runtimeModule);
 
     const loaded = await loader();
 
     expect(runtimeModule.mock.calls).to.have.lengthOf(1);
     expect(factoryLoader.mock.calls).to.have.lengthOf(1);
     expect(factoryLoader.mock.calls[0][0]).to.deep.equal(mockRuntime);
+    expect(factoryLoader.mock.calls[0][1]).to.equal(ENVIRONMENT.NODE);
 
     expect(loaded).to.equal('boo');
   });
 
-  it('should create loader function for node', async () => {
-    mockIsNode.mockReturnValueOnce(true);
-
-    const factoryLoader = jest.fn(() => 'boo');
-    const runtimeModule = jest.fn(() => ({ initializeRuntime: () => Promise.resolve(true) }));
-
-    const loader = getModuleLoader(factoryLoader as any, { dir: null, runtimeModule: runtimeModule as any });
-    const loaded = await loader('bin');
-
-    expect(loaded).to.equal('boo');
-  });
-
-  it('should create loader function for browser', async () => {
+  it('should create loader function with browser environment', async () => {
     mockIsNode.mockReturnValueOnce(false);
 
     const factoryLoader = jest.fn(() => 'boo');
-    const runtimeModule = jest.fn(() => ({ initializeRuntime: () => Promise.resolve(true) }));
+    const mockRuntime = { initializeRuntime: () => Promise.resolve(true) };
+    const runtimeModule = jest.fn(() => mockRuntime);
 
-    const loader = getModuleLoader(factoryLoader as any, { dir: null, runtimeModule: runtimeModule as any });
-    const loaded = await loader('bin');
+    const loader = getModuleLoader(factoryLoader as any, runtimeModule);
+
+    const loaded = await loader();
+
+    expect(runtimeModule.mock.calls).to.have.lengthOf(1);
+    expect(factoryLoader.mock.calls).to.have.lengthOf(1);
+    expect(factoryLoader.mock.calls[0][0]).to.deep.equal(mockRuntime);
+    expect(factoryLoader.mock.calls[0][1]).to.equal(ENVIRONMENT.WEB);
 
     expect(loaded).to.equal('boo');
   });
 
-  it('should throw if loader try to load on browser without endpoint', async () => {
-    mockIsNode.mockReturnValueOnce(false);
-
-    const loader = getModuleLoader(null as any, { dir: null, runtimeModule: null as any });
-
-    let thrown = false;
-    try {
-      await loader();
-    } catch (e) {
-      expect(e).to.be.a('error');
-      thrown = true;
-    }
-
-    expect(thrown).to.be.true;
-  });
-
-  it('should allow override environment via loader', async () => {
+  it('should allow override environment to browser via loader', async () => {
     mockIsNode.mockReturnValueOnce(true);
-
-    const loader = getModuleLoader(null as any, { dir: null, runtimeModule: null as any });
-
-    let thrown = false;
-    try {
-      await loader(null as any, ENVIRONMENT.WEB);
-    } catch (e) {
-      expect(e).to.be.a('error');
-      thrown = true;
-    }
-
-    expect(thrown).to.be.true;
-  });
-
-  it('should set asmDir on node', async () => {
-    mockIsNode.mockReturnValueOnce(true);
-
     const factoryLoader = jest.fn(() => 'boo');
-    const runtimeModule = jest.fn(() => ({ initializeRuntime: () => Promise.resolve(true) }));
+    const mockRuntime = { initializeRuntime: () => Promise.resolve(true) };
+    const runtimeModule = jest.fn(() => mockRuntime);
 
-    const loader = getModuleLoader(factoryLoader as any, { dir: 'asmBoo', runtimeModule: runtimeModule as any });
-    const loaded = await loader('bin');
+    const loader = getModuleLoader(factoryLoader as any, runtimeModule);
 
-    expect(mockConstructModule.mock.calls[0][2]).to.deep.equal('asmBoo');
-    expect(loaded).to.equal('boo');
+    await loader(ENVIRONMENT.WEB);
+    expect(factoryLoader.mock.calls[0][1]).to.equal(ENVIRONMENT.WEB);
+  });
+
+  it('should allow override environment to node via loader', async () => {
+    mockIsNode.mockReturnValueOnce(false);
+    const factoryLoader = jest.fn(() => 'boo');
+    const mockRuntime = { initializeRuntime: () => Promise.resolve(true) };
+    const runtimeModule = jest.fn(() => mockRuntime);
+
+    const loader = getModuleLoader(factoryLoader as any, runtimeModule);
+
+    await loader(ENVIRONMENT.NODE);
+    expect(factoryLoader.mock.calls[0][1]).to.equal(ENVIRONMENT.NODE);
   });
 
   it('should throw when init runtime fail', async () => {
@@ -110,10 +85,10 @@ describe('getModuleLoader', () => {
 
     const runtimeModule = jest.fn(() => ({ initializeRuntime: () => Promise.reject(new Error('meh')) }));
 
-    const loader = getModuleLoader(null as any, { dir: null, runtimeModule: runtimeModule as any });
+    const loader = getModuleLoader(null as any, runtimeModule);
     let thrown = false;
     try {
-      await loader('bin');
+      await loader();
     } catch (e) {
       expect(e).to.be.a('Error');
       thrown = true;
