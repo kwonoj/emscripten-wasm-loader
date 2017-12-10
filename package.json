@@ -57,7 +57,7 @@
     "prettier": "^1.8.2",
     "shx": "^0.2.2",
     "ts-jest": "^21.2.3",
-    "ts-node": "^3.2.0",
+    "ts-node": "^4.0.0",
     "tslint": "^5.8.0",
     "tslint-no-unused-expression-chai": "0.0.3",
     "typescript": "^2.6.2"
