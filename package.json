@@ -39,32 +39,32 @@
   },
   "homepage": "https://github.com/kwonoj/emscripten-wasm-loader#readme",
   "devDependencies": {
-    "@commitlint/cli": "^5.0.0",
+    "@commitlint/cli": "^5.2.5",
     "@commitlint/config-angular": "^5.0.0",
-    "@types/chai": "^4.0.6",
+    "@types/chai": "^4.0.10",
     "@types/jest": "^21.1.0",
-    "@types/lodash": "^4.14.86",
-    "@types/node": "^8.0.53",
+    "@types/lodash": "^4.14.91",
+    "@types/node": "^8.5.1",
     "chai": "^4.0.2",
     "commitizen": "^2.9.6",
     "conventional-changelog": "^1.1.7",
     "conventional-changelog-cli": "^1.3.5",
     "husky": "^0.14.3",
-    "jest": "^21.2.1",
-    "lint-staged": "^5.0.0",
+    "jest": "^22.0.3",
+    "lint-staged": "^6.0.0",
     "lodash": "^4.17.4",
     "npm-run-all": "^4.1.2",
-    "prettier": "^1.8.2",
+    "prettier": "^1.9.2",
     "shx": "^0.2.2",
-    "ts-jest": "^21.2.3",
-    "ts-node": "^3.2.0",
+    "ts-jest": "^22.0.0",
+    "ts-node": "^4.0.2",
     "tslint": "^5.8.0",
     "tslint-no-unused-expression-chai": "0.0.3",
     "typescript": "^2.6.2"
   },
   "dependencies": {
     "getroot": "^1.0.0",
-    "tslib": "^1.8.0"
+    "tslib": "^1.8.1"
   },
   "engines": {
     "node": ">=4"
