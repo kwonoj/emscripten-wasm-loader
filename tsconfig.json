@@ -14,10 +14,10 @@
     "importHelpers": true,
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es5",
+    "target": "es2017",
     "outDir": "dist",
     "lib": [
-      "es2016",
+      "es2017",
       "dom"
     ]
   },
