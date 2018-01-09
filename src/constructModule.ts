@@ -1,6 +1,12 @@
 import { ENVIRONMENT } from './environment';
 import { log } from './util/logger';
 
+interface BinaryMetadata {
+  endpoint: string;
+  name?: string;
+  version?: number;
+}
+
 type StringMap = { [key: string]: any };
 
 /**
@@ -27,7 +33,7 @@ interface AsmRuntimeType {
  *
  * @returns {StringMap} Augmented object with prefilled interfaces.
  */
-const constructModule = (value: StringMap, environment: ENVIRONMENT) => {
+const constructModule = (value: StringMap, environment: ENVIRONMENT, binaryMetadata?: BinaryMetadata) => {
   const ret = {
     ...value,
     __asm_module_isInitialized__: false,
@@ -64,7 +70,19 @@ const constructModule = (value: StringMap, environment: ENVIRONMENT) => {
     });
   };
 
+  //Wasm module have separate wasm binary file to load
+  if (!!binaryMetadata) {
+    log(`constructModule: construct custom binary file load for ${JSON.stringify(binaryMetadata)}`);
+
+    //Allow cache compiled binary results for browser environment where indexedDB is available
+    const isCacheStorageAccessible = !!indexedDB && !!binaryMetadata.version;
+
+    if (isCacheStorageAccessible) {
+      log(`constructModule: cache storage is accesible`);
+    }
+  }
+
   return ret as AsmRuntimeType;
 };
 
-export { StringMap, AsmRuntimeType, constructModule };
+export { BinaryMetadata, StringMap, AsmRuntimeType, constructModule };
