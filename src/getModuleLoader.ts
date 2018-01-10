@@ -1,4 +1,5 @@
-import { AsmRuntimeType, BinaryMetadata, constructModule, StringMap } from './constructModule';
+import { BinaryMetadata } from './binaryCache';
+import { AsmRuntimeType, constructModule, StringMap } from './constructModule';
 import { ENVIRONMENT } from './environment';
 import { isNode } from './util/isNode';
 import { log } from './util/logger';
@@ -10,7 +11,7 @@ import { log } from './util/logger';
  * This option is mostly for Electron's renderer process, which is detected as node.js env by default
  * but in case of would like to use fetch to download binary module.
  *
- * @param {BinaryMetadata} [binaryMetadata] Allow to specify separate wasm binary to load.
+ * @param {BinaryCacheMetadata} [binaryMetadata] Allow to specify separate wasm binary to load.
  * If this isn't specified, wasm should be compiled with SINGLE_FILE option.
  *
  * @returns {T}
@@ -74,4 +75,4 @@ const getModuleLoader: getModuleLoaderType = <T, R extends AsmRuntimeType>(
   }
 };
 
-export { BinaryMetadata, runtimeModuleType, moduleLoaderType, getModuleLoaderType, getModuleLoader };
+export { runtimeModuleType, moduleLoaderType, getModuleLoaderType, getModuleLoader };

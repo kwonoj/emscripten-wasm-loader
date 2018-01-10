@@ -1,12 +1,9 @@
+import { root } from 'getroot';
+import { BinaryFileMetadata, BinaryMetadata, instantiateBinary } from './binaryCache';
+// @ts-ignore: TS4023
+import { BinaryCacheMetadata, BinaryEndpointMetadata } from './binaryCache';
 import { ENVIRONMENT } from './environment';
 import { log } from './util/logger';
-
-interface BinaryMetadata {
-  endpoint: string;
-  asmDir: string;
-  name?: string;
-  version?: number;
-}
 
 type StringMap = { [key: string]: any };
 
@@ -34,7 +31,9 @@ interface AsmRuntimeType {
  *
  * @returns {StringMap} Augmented object with prefilled interfaces.
  */
-const constructModule = (value: StringMap, environment: ENVIRONMENT, binaryMetadata?: BinaryMetadata) => {
+const constructModule = (value: StringMap,
+                         environment: ENVIRONMENT,
+                         metadata?: BinaryMetadata) => {
   const ret = {
     ...value,
     __asm_module_isInitialized__: false,
@@ -72,24 +71,33 @@ const constructModule = (value: StringMap, environment: ENVIRONMENT, binaryMetad
   };
 
   //Wasm module have separate wasm binary file to load
-  if (!!binaryMetadata) {
-    log(`constructModule: construct custom binary file load for ${JSON.stringify(binaryMetadata)}`);
+  if (!!metadata) {
+    log(`constructModule: construct custom binary file load for ${JSON.stringify(metadata)}`);
+    const { name, version } = metadata;
 
-    const { name, version, asmDir } = binaryMetadata;
-    //Allow cache compiled binary results for browser environment where indexedDB is available
-    const isCacheStorageAccessible = !!indexedDB && !!name && !!version;
-
-    if (isCacheStorageAccessible) {
-      //noop
-    } else if (environment === ENVIRONMENT.NODE) {
-      const locateDir = asmDir || __dirname;
+    if (environment === ENVIRONMENT.NODE) {
+      const locateDir = (metadata as BinaryFileMetadata).locationPath || __dirname;
       log(`constructModule: binaryEndpoint found, setting locateFile for loading wasm binary from ${locateDir}`);
       //tslint:disable-next-line:no-require-imports
       ret.locateFile = (fileName: string) => require('path').join(locateDir, fileName);
+    }
+
+    //Allow cache compiled binary results for browser environment where indexedDB is available
+    //Note: this isn't orthogonal condition to node.js environment,
+    //cause Electron can have node access in renderer process
+    if (!!root.indexedDB && !!name && !!version) {
+      ret.instantiateWasm = (importObject: any, cb: (instance: any) => void) => {
+        instantiateBinary({ ...metadata, environment }, importObject)
+          .then((resultObject) => cb(resultObject.instance),
+          (reason: any) => log(`constructModule: failed to instantiate binary for cld3, bail out`, { reason }));
+
+        //async instantiate should return empty dict immediately
+        return {};
+      };
     }
   }
 
   return ret as AsmRuntimeType;
 };
 
-export { BinaryMetadata, StringMap, AsmRuntimeType, constructModule };
+export { StringMap, AsmRuntimeType, constructModule };
