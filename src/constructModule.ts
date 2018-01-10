@@ -3,6 +3,7 @@ import { log } from './util/logger';
 
 interface BinaryMetadata {
   endpoint: string;
+  asmDir: string;
   name?: string;
   version?: number;
 }
@@ -74,11 +75,17 @@ const constructModule = (value: StringMap, environment: ENVIRONMENT, binaryMetad
   if (!!binaryMetadata) {
     log(`constructModule: construct custom binary file load for ${JSON.stringify(binaryMetadata)}`);
 
+    const { name, version, asmDir } = binaryMetadata;
     //Allow cache compiled binary results for browser environment where indexedDB is available
-    const isCacheStorageAccessible = !!indexedDB && !!binaryMetadata.version;
+    const isCacheStorageAccessible = !!indexedDB && !!name && !!version;
 
     if (isCacheStorageAccessible) {
-      log(`constructModule: cache storage is accesible`);
+      //noop
+    } else if (environment === ENVIRONMENT.NODE) {
+      const locateDir = asmDir || __dirname;
+      log(`constructModule: binaryEndpoint found, setting locateFile for loading wasm binary from ${locateDir}`);
+      //tslint:disable-next-line:no-require-imports
+      ret.locateFile = (fileName: string) => require('path').join(locateDir, fileName);
     }
   }
 
