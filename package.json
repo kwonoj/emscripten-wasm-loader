@@ -39,7 +39,7 @@
   },
   "homepage": "https://github.com/kwonoj/emscripten-wasm-loader#readme",
   "devDependencies": {
-    "@commitlint/cli": "^6.2.0",
+    "@commitlint/cli": "^7.0.0",
     "@commitlint/config-angular": "^6.1.3",
     "@types/chai": "^4.1.3",
     "@types/jest": "^22.2.3",
