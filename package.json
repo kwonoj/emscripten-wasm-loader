@@ -64,6 +64,7 @@
   },
   "dependencies": {
     "getroot": "^1.0.0",
+    "nanoid": "^1.0.7",
     "tslib": "^1.9.3"
   },
   "engines": {

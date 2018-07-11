@@ -4,8 +4,7 @@ import { FS } from '../BaseAsmModule';
  * `mkdir -p` implementation for wasm FS.mkdir interface.
  * dirPath param should be unixified.
  */
-/** @internal */
-export const mkdirTree = (FS: FS, dirPath: string) => {
+const mkdirTree = (FS: FS, dirPath: string) => {
   const mkdir = (path: string) => {
     try {
       FS.mkdir(path);
@@ -26,3 +25,5 @@ export const mkdirTree = (FS: FS, dirPath: string) => {
     }, [])
     .forEach(mkdir);
 };
+
+export { mkdirTree };
