@@ -1,18 +1,12 @@
 import { AsmRuntimeType, constructModule, StringMap } from './constructModule';
-import { ENVIRONMENT } from './environment';
-import { isNode } from './util/isNode';
 import { log } from './util/logger';
 
 /**
  * Asynchronously load and initialize asm module.
  *
- * @param {ENVIRONMENT} [environment] Override running environment to load binary module.
- * This option is mostly for Electron's renderer process, which is detected as node.js env by default
- * but in case of would like to use fetch to download binary module.
- *
  * @returns {T} Factory function manages lifecycle of hunspell and virtual files.
  */
-type moduleLoaderType<T> = (environment?: ENVIRONMENT) => Promise<T>;
+type moduleLoaderType<T> = () => Promise<T>;
 
 /**
  * Type of runtime module function. This is node.js asm module loaded via plain `require`,
@@ -28,7 +22,7 @@ type moduleLoaderType<T> = (environment?: ENVIRONMENT) => Promise<T>;
 type runtimeModuleType = (moduleObject: StringMap) => AsmRuntimeType;
 
 type getModuleLoaderType = <T, R extends AsmRuntimeType>(
-  factoryLoader: (runtime: R, environment: ENVIRONMENT) => T,
+  factoryLoader: (runtime: R) => T,
   runtimeModule: runtimeModuleType,
   module?: StringMap
 ) => moduleLoaderType<T>;
@@ -47,15 +41,11 @@ type getModuleLoaderType = <T, R extends AsmRuntimeType>(
  * @returns {moduleLoaderType<T>} Loader function
  */
 const getModuleLoader: getModuleLoaderType = <T, R extends AsmRuntimeType>(
-  factoryLoader: (runtime: R, environment: ENVIRONMENT) => T,
+  factoryLoader: (runtime: R) => T,
   runtimeModule: runtimeModuleType,
   module?: StringMap
-) => async (environment?: ENVIRONMENT) => {
-  const env = environment ? environment : isNode() ? ENVIRONMENT.NODE : ENVIRONMENT.WEB;
-
-  log(`loadModule: ${environment ? `using environment override ${environment}` : `running environment is ${env}`}`);
-
-  const constructedModule = constructModule(module || {}, env);
+) => async () => {
+  const constructedModule = constructModule(module || {});
   log(`loadModule: constructed module object for runtime`);
 
   try {
@@ -64,7 +54,7 @@ const getModuleLoader: getModuleLoaderType = <T, R extends AsmRuntimeType>(
 
     log(`loadModule: initialized wasm binary Runtime`);
 
-    return factoryLoader(asmModule as R, env) as T;
+    return factoryLoader(asmModule as R) as T;
   } catch (e) {
     log(`loadModule: failed to initialize wasm binary runtime`);
     throw e;
