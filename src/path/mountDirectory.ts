@@ -1,6 +1,6 @@
 import * as unixify from 'unixify';
 import { FS } from '../BaseAsmModule';
-import { ENVIRONMENT } from '../environment';
+import { isNode } from '../util/isNode';
 import { log } from '../util/logger';
 import { isMounted } from './isMounted';
 import { mkdirTree } from './mkdirTree';
@@ -15,10 +15,8 @@ import { mkdirTree } from './mkdirTree';
  *
  * @return {(dirPath: string) => string} function to mount given phsical path under memory filesystem.
  */
-const mountDirectory = (FS: FS, nodePathId: string, environment: ENVIRONMENT): ((dirPath: string) => string) => (
-  dirPath: string
-): string => {
-  if (environment !== ENVIRONMENT.NODE) {
+const mountDirectory = (FS: FS, nodePathId: string): ((dirPath: string) => string) => (dirPath: string): string => {
+  if (!isNode()) {
     throw new Error('Mounting physical directory is not supported other than node.js environment');
   }
 
