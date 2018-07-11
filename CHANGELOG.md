@@ -1,3 +1,18 @@
+<a name="2.1.0"></a>
+# [2.1.0](https://github.com/kwonoj/emscripten-wasm-loader/compare/v2.0.0...v2.1.0) (2018-07-11)
+
+
+### Features
+
+* **index:** export path modules ([ea5f0fd](https://github.com/kwonoj/emscripten-wasm-loader/commit/ea5f0fd))
+* **ismounted:** implement ismounted ([38368cd](https://github.com/kwonoj/emscripten-wasm-loader/commit/38368cd))
+* **mkdirtree:** implement mkdirtree ([9d7fc9f](https://github.com/kwonoj/emscripten-wasm-loader/commit/9d7fc9f))
+* **mountbuffer:** implement mountbuffer ([f24c13a](https://github.com/kwonoj/emscripten-wasm-loader/commit/f24c13a))
+* **mountdirectory:** implement mountdirectory ([325e1f4](https://github.com/kwonoj/emscripten-wasm-loader/commit/325e1f4))
+* **unmount:** implement unmount ([19739d7](https://github.com/kwonoj/emscripten-wasm-loader/commit/19739d7))
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/kwonoj/emscripten-wasm-loader/compare/v1.0.0...v2.0.0) (2018-07-11)
 
