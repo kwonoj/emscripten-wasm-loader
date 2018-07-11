@@ -28,13 +28,9 @@ getModuleLoader<T, R extends AsmRuntimeType>(
 /**
  * Asynchronously load and initialize asm module.
  *
- * @param {ENVIRONMENT} [environment] Override running environment to load binary module.
- * This option is mostly for Electron's renderer process, which is detected as node.js env by default
- * but in case of would like to use fetch to download binary module.
- *
  * @returns {T} Factory function manages lifecycle of hunspell and virtual files.
  */
-type moduleLoaderType<T> = (environment?: ENVIRONMENT) => Promise<T>;
+type moduleLoaderType<T> = () => Promise<T>;
 ```
 
 `factoryLoader` is callback function to be called to create actual instance of module using initialized wasm binary runtime for customized init steps for each consumer. `runtimeModule` is function loaded via `require` to emscripten preamble js for wasm binaries. It expects wasm binary should be built with `MODULARIZE=1` with `SINGLE_FILE=1` option. Lastly `module` is object to be inherited when execute `runtimeModule`. Emscripten's modularized preamble construct scoped wasm runtime module named `Module`, allows to have predefined object if needed. Internally `getModuleLoader` augments given object and set default interfaces like `initializeRuntime`.

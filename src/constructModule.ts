@@ -1,4 +1,3 @@
-import { ENVIRONMENT } from './environment';
 import { log } from './util/logger';
 
 type StringMap = { [key: string]: any };
@@ -22,18 +21,15 @@ interface AsmRuntimeType {
  * to access function-scope variables inside.
  *
  * @param {StringMap} value pre-constructed value to be used, or empty object {}.
- * @param {ENVIRONMENT} environment Running environment to determine to use node.js specific path resolve.
- * (.wasm, .mem) via fetch when initialize module in a browser environment.
  *
  * @returns {StringMap} Augmented object with prefilled interfaces.
  */
-const constructModule = (value: StringMap, environment: ENVIRONMENT) => {
+const constructModule = (value: StringMap) => {
   const ret = {
     ...value,
     __asm_module_isInitialized__: false,
     onRuntimeInitialized: null,
-    initializeRuntime: null,
-    ENVIRONMENT: environment
+    initializeRuntime: null
   } as any;
 
   //export initializeRuntime interface for awaitable runtime initialization

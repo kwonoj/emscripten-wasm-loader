@@ -1,19 +1,17 @@
 import { expect } from 'chai';
 import { constructModule } from '../src/constructModule';
-import { ENVIRONMENT } from '../src/environment';
 
 describe('constructModule', () => {
   it('should inherit injected object', () => {
     const injected = { a: 1 };
-    const module = constructModule(injected, ENVIRONMENT.WEB);
+    const module = constructModule(injected);
 
     expect(module).contains(injected);
-    expect(module).to.have.property('ENVIRONMENT');
   });
 
   describe('initializeRuntime', () => {
     it('should be awaitable to initialize runtime', async () => {
-      const module = constructModule({}, ENVIRONMENT.WEB);
+      const module = constructModule({});
 
       //onRuntimeInitialized is callback called inside of preamble init, we just call it to check logic
       setTimeout(() => (module as any).onRuntimeInitialized(), 10);
@@ -26,7 +24,7 @@ describe('constructModule', () => {
     it('should fail if init take too long', async () => {
       jest.useFakeTimers();
 
-      const module = constructModule({}, ENVIRONMENT.WEB);
+      const module = constructModule({});
       const initPromise = module.initializeRuntime();
 
       jest.runAllTimers();
@@ -36,7 +34,7 @@ describe('constructModule', () => {
     it('should accept custom timeout', async () => {
       jest.useFakeTimers();
 
-      const module = constructModule({}, ENVIRONMENT.WEB);
+      const module = constructModule({});
       const initPromise = module.initializeRuntime(100);
 
       jest.runTimersToTime(110);
@@ -45,7 +43,7 @@ describe('constructModule', () => {
 
     it('should reject when aborted', async () => {
       jest.useFakeTimers();
-      const module = constructModule({}, ENVIRONMENT.WEB);
+      const module = constructModule({});
 
       let thrown = false;
       try {
@@ -64,7 +62,7 @@ describe('constructModule', () => {
 
     it('should trap out early when aborted while initialize runtime', async () => {
       jest.useFakeTimers();
-      const module = constructModule({}, ENVIRONMENT.WEB);
+      const module = constructModule({});
 
       let thrown = false;
       try {
@@ -83,7 +81,7 @@ describe('constructModule', () => {
 
     it('should not trap when aborted after init', async () => {
       jest.useFakeTimers();
-      const module = constructModule({}, ENVIRONMENT.WEB);
+      const module = constructModule({});
 
       let thrown = false;
       try {
