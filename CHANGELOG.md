@@ -1,3 +1,19 @@
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/kwonoj/emscripten-wasm-loader/compare/v1.0.0...v2.0.0) (2018-07-11)
+
+
+### Bug Fixes
+
+* **constructmodule:** deprecate environment ([5a39c45](https://github.com/kwonoj/emscripten-wasm-loader/commit/5a39c45))
+* **getmoduleloader:** deprecate environment ([1fc7e3f](https://github.com/kwonoj/emscripten-wasm-loader/commit/1fc7e3f))
+
+
+### BREAKING CHANGES
+
+* **constructmodule:** no longer able to specify environment in runtime
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/kwonoj/emscripten-wasm-loader/compare/v0.0.8...v1.0.0) (2017-11-29)
 
