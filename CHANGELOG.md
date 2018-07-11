@@ -1,3 +1,13 @@
+<a name="2.1.1"></a>
+## [2.1.1](https://github.com/kwonoj/emscripten-wasm-loader/compare/v2.1.0...v2.1.1) (2018-07-11)
+
+
+### Bug Fixes
+
+* **mountdirectory:** remove redundant env param ([c751ec9](https://github.com/kwonoj/emscripten-wasm-loader/commit/c751ec9))
+
+
+
 <a name="2.1.0"></a>
 # [2.1.0](https://github.com/kwonoj/emscripten-wasm-loader/compare/v2.0.0...v2.1.0) (2018-07-11)
 
