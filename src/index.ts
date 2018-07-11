@@ -4,3 +4,4 @@ export { runtimeModuleType, moduleLoaderType, getModuleLoaderType, getModuleLoad
 export { enableLogger, log } from './util/logger';
 export { isNode } from './util/isNode';
 export { isWasmEnabled } from './util/isWasmEnabled';
+export { stringToUTF8Signature, cwrapSignature, FILESYSTEMS, FS, BaseAsmModule } from './BaseAsmModule';
