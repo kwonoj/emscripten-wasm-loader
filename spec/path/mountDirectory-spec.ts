@@ -1,14 +1,15 @@
 import { expect } from 'chai';
 import { join, resolve } from 'path';
 import * as unixify from 'unixify';
-import { ENVIRONMENT } from '../../src/environment';
 import { isMounted } from '../../src/path/isMounted';
 import { mkdirTree } from '../../src/path/mkdirTree';
 import { mountDirectory } from '../../src/path/mountDirectory';
+import { isNode } from '../../src/util/isNode';
 
 jest.mock('path');
 jest.mock('../../src/path/isMounted');
 jest.mock('../../src/path/mkdirTree');
+jest.mock('../../src/util/isNode');
 
 const nodePathId: string = 'nodePathPrefixDummy';
 const getFsMock = () => ({
@@ -20,15 +21,20 @@ const getFsMock = () => ({
 
 describe('mountDirectory', () => {
   let fsMock: { mount: jest.Mock<any> };
-  beforeEach(() => (fsMock = getFsMock()));
+  beforeEach(() => {
+    fsMock = getFsMock();
+    (isNode as jest.Mock<any>).mockReturnValue(true);
+  });
 
   it('should throw if environment is not node', () => {
-    const mountDirectoryFn = mountDirectory(fsMock as any, nodePathId, ENVIRONMENT.WEB);
+    (isNode as jest.Mock<any>).mockReturnValueOnce(false);
+
+    const mountDirectoryFn = mountDirectory(fsMock as any, nodePathId);
     expect(() => mountDirectoryFn('/user')).to.throw();
   });
 
   it('should return if path is already mounted', () => {
-    const mountDirectoryFn = mountDirectory(fsMock as any, nodePathId, ENVIRONMENT.NODE);
+    const mountDirectoryFn = mountDirectory(fsMock as any, nodePathId);
 
     (join as jest.Mock<any>).mockImplementationOnce((...args: Array<any>) => args.join('/'));
     (resolve as jest.Mock<any>).mockImplementationOnce((arg: string) => arg);
@@ -45,7 +51,7 @@ describe('mountDirectory', () => {
   });
 
   it('should create and mount for new path provided', () => {
-    const mountDirectoryFn = mountDirectory(fsMock as any, nodePathId, ENVIRONMENT.NODE);
+    const mountDirectoryFn = mountDirectory(fsMock as any, nodePathId);
 
     (join as jest.Mock<any>).mockImplementationOnce((...args: Array<any>) => args.join('/'));
     (resolve as jest.Mock<any>).mockImplementation((arg: string) => arg);
