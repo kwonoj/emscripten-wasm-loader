@@ -1,7 +1,5 @@
 {
-  "transform": {
-    ".(js|jsx|ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-  },
+  "preset": "ts-jest",
   "testMatch": [
     "**/spec/**/*.ts"
   ],
@@ -20,6 +18,9 @@
   ],
   "coverageReporters": [
     "lcov"
+  ],
+  "reporters": [
+    "jest-spin-reporter"
   ],
   "collectCoverageFrom": [
     "src/**/*.{ts, tsx}",
