@@ -37,6 +37,7 @@ interface AsmModule {
   stackRestore: (stack: number) => void;
   getValue: <T = any>(ptr: number, type: string, nosafe?: boolean) => T;
   Pointer_stringify: (ptr: number) => string;
+  _free: (ptr: number) => void;
 }
 
 /**
