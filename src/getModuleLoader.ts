@@ -30,7 +30,8 @@ type runtimeModuleType = (moduleObject: StringMap) => AsmRuntimeType;
 type getModuleLoaderType = <T, R extends AsmRuntimeType>(
   factoryLoader: (runtime: R, environment: ENVIRONMENT) => T,
   runtimeModule: runtimeModuleType,
-  module?: StringMap
+  module?: StringMap,
+  initializeOpts?: StringMap
 ) => moduleLoaderType<T>;
 
 /**
@@ -44,12 +45,15 @@ type getModuleLoaderType = <T, R extends AsmRuntimeType>(
  *
  * @param {{[key: string]: any}} [module] Stringmap object to be injected into wasm runtime for override / set additional value in asm module.
  *
+ * @param {{[key: string]: any}} [initializeOpts] Stringmap object to be used to configure the intialization of the module.
+ *
  * @returns {moduleLoaderType<T>} Loader function
  */
 const getModuleLoader: getModuleLoaderType = <T, R extends AsmRuntimeType>(
   factoryLoader: (runtime: R, environment: ENVIRONMENT) => T,
   runtimeModule: runtimeModuleType,
-  module?: StringMap
+  module?: StringMap,
+  initializeOpts?: StringMap
 ) => async (environment?: ENVIRONMENT) => {
   const env = environment ? environment : isNode() ? ENVIRONMENT.NODE : ENVIRONMENT.WEB;
 
@@ -60,7 +64,7 @@ const getModuleLoader: getModuleLoaderType = <T, R extends AsmRuntimeType>(
 
   try {
     const asmModule = runtimeModule(constructedModule);
-    await asmModule.initializeRuntime();
+    await asmModule.initializeRuntime((initializeOpts || {}).timeout);
 
     log(`loadModule: initialized wasm binary Runtime`);
 
