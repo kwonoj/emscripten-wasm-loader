@@ -22,7 +22,7 @@ const loader = getModuleLoader(factoryLoader, require('wasm/wasmlibaray'), { add
 getModuleLoader<T, R extends AsmRuntimeType>(
   factoryLoader: (runtime: R) => T,
   runtimeModule: runtimeModuleType,
-  module?: stringMap
+  module?: Record<string, any>
 ) => moduleLoaderType<T>;
 
 /**
