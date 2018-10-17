@@ -41,4 +41,15 @@ describe('getModuleLoader', () => {
     }
     expect(thrown).to.be.true;
   });
+
+  it('should accept init options', async () => {
+    mockIsNode.mockReturnValueOnce(true);
+
+    const mockRuntime = jest.fn();
+    const runtimeModule = jest.fn(() => ({ initializeRuntime: mockRuntime }));
+
+    const loader = getModuleLoader(jest.fn() as any, runtimeModule, null as any, { timeout: 1000 });
+    loader();
+    expect(mockRuntime.mock.calls[0][0]).to.equal(1000);
+  });
 });

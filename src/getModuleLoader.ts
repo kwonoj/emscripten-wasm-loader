@@ -1,4 +1,4 @@
-import { AsmRuntimeType, constructModule, StringMap } from './constructModule';
+import { AsmRuntimeType, constructModule } from './constructModule';
 import { log } from './util/logger';
 
 /**
@@ -7,6 +7,13 @@ import { log } from './util/logger';
  * @returns {T} Factory function manages lifecycle of hunspell and virtual files.
  */
 type moduleLoaderType<T> = () => Promise<T>;
+
+/**
+ * Initialization options given to `getModuleLoader`
+ */
+interface ModuleInitOption {
+  timeout: number;
+}
 
 /**
  * Type of runtime module function. This is node.js asm module loaded via plain `require`,
@@ -19,12 +26,13 @@ type moduleLoaderType<T> = () => Promise<T>;
  * asmLoader(); //actually construct wasm module
  * ```
  */
-type runtimeModuleType = (moduleObject: StringMap) => AsmRuntimeType;
+type runtimeModuleType = (moduleObject: Record<string, any>) => AsmRuntimeType;
 
 type getModuleLoaderType = <T, R extends AsmRuntimeType>(
   factoryLoader: (runtime: R) => T,
   runtimeModule: runtimeModuleType,
-  module?: StringMap
+  module?: Record<string, any>,
+  moduleInitOption?: Partial<ModuleInitOption>
 ) => moduleLoaderType<T>;
 
 /**
@@ -36,21 +44,24 @@ type getModuleLoaderType = <T, R extends AsmRuntimeType>(
  * It is wasm runtime loaded via plain `require` but compiled with MODULARIZED=1 preamble with SINGLE_FILE option
  * which should be function to accept asm module object to override.
  *
- * @param {{[key: string]: any}} [module] Stringmap object to be injected into wasm runtime for override / set additional value in asm module.
+ * @param {Record<string, any>} [module] Record<string, any> object to be injected into wasm runtime for override/set additional value in asm module.
+ *
+ * @param {ModuleInitOption} [initOptions] Configuration used to initialize the module
  *
  * @returns {moduleLoaderType<T>} Loader function
  */
 const getModuleLoader: getModuleLoaderType = <T, R extends AsmRuntimeType>(
   factoryLoader: (runtime: R) => T,
   runtimeModule: runtimeModuleType,
-  module?: StringMap
+  module?: Record<string, any>,
+  { timeout }: Partial<ModuleInitOption> = {}
 ) => async () => {
   const constructedModule = constructModule(module || {});
   log(`loadModule: constructed module object for runtime`);
 
   try {
     const asmModule = runtimeModule(constructedModule);
-    await asmModule.initializeRuntime();
+    await asmModule.initializeRuntime(timeout);
 
     log(`loadModule: initialized wasm binary Runtime`);
 
@@ -61,4 +72,4 @@ const getModuleLoader: getModuleLoaderType = <T, R extends AsmRuntimeType>(
   }
 };
 
-export { runtimeModuleType, moduleLoaderType, getModuleLoaderType, getModuleLoader };
+export { ModuleInitOption, runtimeModuleType, moduleLoaderType, getModuleLoaderType, getModuleLoader };
