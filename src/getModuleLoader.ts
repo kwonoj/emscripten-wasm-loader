@@ -15,6 +15,13 @@ import { log } from './util/logger';
 type moduleLoaderType<T> = (environment?: ENVIRONMENT) => Promise<T>;
 
 /**
+ * Initialization options given to `getModuleLoader`
+ */
+interface ModuleInitOption {
+  timeout: number;
+}
+
+/**
  * Type of runtime module function. This is node.js asm module loaded via plain `require`,
  * internally emscripten should compile with MODULARIZE=1 option to loaded module via require returns
  * function to construct wasm module internally.
@@ -30,7 +37,8 @@ type runtimeModuleType = (moduleObject: StringMap) => AsmRuntimeType;
 type getModuleLoaderType = <T, R extends AsmRuntimeType>(
   factoryLoader: (runtime: R, environment: ENVIRONMENT) => T,
   runtimeModule: runtimeModuleType,
-  module?: StringMap
+  module?: StringMap,
+  { timeout }?: Partial<ModuleInitOption>
 ) => moduleLoaderType<T>;
 
 /**
@@ -44,12 +52,15 @@ type getModuleLoaderType = <T, R extends AsmRuntimeType>(
  *
  * @param {{[key: string]: any}} [module] Stringmap object to be injected into wasm runtime for override / set additional value in asm module.
  *
+ * @param {ModuleInitOption} [initOptions] Configuration used to initialize the module
+ *
  * @returns {moduleLoaderType<T>} Loader function
  */
 const getModuleLoader: getModuleLoaderType = <T, R extends AsmRuntimeType>(
   factoryLoader: (runtime: R, environment: ENVIRONMENT) => T,
   runtimeModule: runtimeModuleType,
-  module?: StringMap
+  module?: StringMap,
+  { timeout }: Partial<ModuleInitOption> = {}
 ) => async (environment?: ENVIRONMENT) => {
   const env = environment ? environment : isNode() ? ENVIRONMENT.NODE : ENVIRONMENT.WEB;
 
@@ -60,7 +71,7 @@ const getModuleLoader: getModuleLoaderType = <T, R extends AsmRuntimeType>(
 
   try {
     const asmModule = runtimeModule(constructedModule);
-    await asmModule.initializeRuntime();
+    await asmModule.initializeRuntime(timeout);
 
     log(`loadModule: initialized wasm binary Runtime`);
 
@@ -71,4 +82,4 @@ const getModuleLoader: getModuleLoaderType = <T, R extends AsmRuntimeType>(
   }
 };
 
-export { runtimeModuleType, moduleLoaderType, getModuleLoaderType, getModuleLoader };
+export { ModuleInitOption, runtimeModuleType, moduleLoaderType, getModuleLoaderType, getModuleLoader };
