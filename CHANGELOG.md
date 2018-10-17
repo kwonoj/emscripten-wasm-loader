@@ -1,3 +1,8 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/kwonoj/emscripten-wasm-loader/compare/v1.0.0...v1.1.0) (2018-10-17)
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/kwonoj/emscripten-wasm-loader/compare/v0.0.8...v1.0.0) (2017-11-29)
 
