@@ -1,10 +1,14 @@
 {
   "name": "emscripten-wasm-loader",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Common interface to load wasm module into isomorphic environment",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
+  "browser": {
+    "./dist/cjs/path/mountDirectory.js": "./dist/cjs/path/mountBuffer.js",
+    "./dist/esm/path/mountDirectory.js": "./dist/esm/path/mountBuffer.js"
+  },
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
