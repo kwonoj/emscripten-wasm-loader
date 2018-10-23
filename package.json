@@ -1,6 +1,6 @@
 {
   "name": "emscripten-wasm-loader",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Common interface to load wasm module into isomorphic environment",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
