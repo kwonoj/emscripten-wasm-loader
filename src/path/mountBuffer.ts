@@ -32,4 +32,13 @@ const mountBuffer = (FS: FS, memPathId: string): ((contents: ArrayBufferView, fi
   return mountedFilePath;
 };
 
-export { mountBuffer };
+/**
+ * Stub function to support `browser` field in package.json. Do not use.
+ *
+ * @internal
+ */
+const mountDirectory = () => {
+  throw new Error('not supported');
+};
+
+export { mountBuffer, mountDirectory };

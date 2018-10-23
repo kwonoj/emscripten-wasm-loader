@@ -5,6 +5,10 @@
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
+  "browser": {
+    "./dist/cjs/path/mountDirectory.js": "./dist/cjs/path/mountBuffer.js",
+    "./dist/esm/path/mountDirectory.js": "./dist/esm/path/mountBuffer.js"
+  },
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
