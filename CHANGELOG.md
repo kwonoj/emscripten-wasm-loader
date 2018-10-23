@@ -1,3 +1,15 @@
+<a name="2.2.1"></a>
+## [2.2.1](https://github.com/kwonoj/emscripten-wasm-loader/compare/v2.1.1...v2.2.1) (2018-10-23)
+
+
+### Features
+
+* **constructmodule:** support binaryendpoint ([e38d740](https://github.com/kwonoj/emscripten-wasm-loader/commit/e38d740))
+* **free:** export free interface ([08d09bc](https://github.com/kwonoj/emscripten-wasm-loader/commit/08d09bc))
+* **getmoduleloader:** expose timeout for wasm module loading ([f74a268](https://github.com/kwonoj/emscripten-wasm-loader/commit/f74a268))
+
+
+
 <a name="2.1.1"></a>
 ## [2.1.1](https://github.com/kwonoj/emscripten-wasm-loader/compare/v2.1.0...v2.1.1) (2018-07-11)
 
