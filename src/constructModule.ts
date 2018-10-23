@@ -19,16 +19,23 @@ interface AsmRuntimeType {
  * to access function-scope variables inside.
  *
  * @param {Record<string, any>} value pre-constructed value to be used, or empty object {}.
+ * @param {string} [binaryEndpoint] Provides endpoint to server to download binary module.
+ * This value is for browser only - on node.js, should rely on emscripten's default resolution.
  *
  * @returns {Record<string, any>} Augmented object with prefilled interfaces.
  */
-const constructModule = (value: Record<string, any>) => {
+const constructModule = (value: Record<string, string>, binaryRemoteEndpoint?: string) => {
   const ret = {
     ...value,
     __asm_module_isInitialized__: false,
     onRuntimeInitialized: null,
     initializeRuntime: null
   } as any;
+
+  if (!!binaryRemoteEndpoint) {
+    log(`constructModule: binaryRemoteEndpoint found, override locateFile function`);
+    ret.locateFile = (fileName: string) => `${binaryRemoteEndpoint}/${fileName}`;
+  }
 
   //export initializeRuntime interface for awaitable runtime initialization
   ret.initializeRuntime = (timeout: number = 3000) => {
