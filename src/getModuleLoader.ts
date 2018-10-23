@@ -12,6 +12,7 @@ type moduleLoaderType<T> = () => Promise<T>;
  * Initialization options given to `getModuleLoader`
  */
 interface ModuleInitOption {
+  binaryRemoteEndpoint: string;
   timeout: number;
 }
 
@@ -54,9 +55,9 @@ const getModuleLoader: getModuleLoaderType = <T, R extends AsmRuntimeType>(
   factoryLoader: (runtime: R) => T,
   runtimeModule: runtimeModuleType,
   module?: Record<string, any>,
-  { timeout }: Partial<ModuleInitOption> = {}
+  { timeout, binaryRemoteEndpoint }: Partial<ModuleInitOption> = {}
 ) => async () => {
-  const constructedModule = constructModule(module || {});
+  const constructedModule = constructModule(module || {}, binaryRemoteEndpoint);
   log(`loadModule: constructed module object for runtime`);
 
   try {

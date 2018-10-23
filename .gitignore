@@ -20,3 +20,5 @@ rules/
 # Misc
 npm-debug.log
 .DS_STORE
+
+*.tgz
