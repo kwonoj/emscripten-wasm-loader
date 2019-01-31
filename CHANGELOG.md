@@ -1,3 +1,12 @@
+## [2.2.3](https://github.com/kwonoj/emscripten-wasm-loader/compare/v2.2.2...v2.2.3) (2019-01-31)
+
+
+### Features
+
+* **asmmodule:** export malloc ([45388c6](https://github.com/kwonoj/emscripten-wasm-loader/commit/45388c6))
+
+
+
 <a name="2.2.2"></a>
 ## [2.2.2](https://github.com/kwonoj/emscripten-wasm-loader/compare/v2.2.1...v2.2.2) (2018-10-23)
 

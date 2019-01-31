@@ -38,6 +38,7 @@ interface AsmModule {
   getValue: <T = any>(ptr: number, type: string, nosafe?: boolean) => T;
   Pointer_stringify: (ptr: number) => string;
   _free: (ptr: number) => void;
+  _malloc: (size: number) => number;
 }
 
 /**
