@@ -42,38 +42,37 @@
   },
   "homepage": "https://github.com/kwonoj/emscripten-wasm-loader#readme",
   "devDependencies": {
-    "@commitlint/cli": "^7.4.0",
-    "@commitlint/config-angular": "^7.3.1",
+    "@commitlint/cli": "^8.0.0",
+    "@commitlint/config-angular": "^8.0.0",
     "@types/chai": "^4.1.7",
-    "@types/jest": "^23.3.13",
-    "@types/lodash": "^4.14.120",
-    "@types/node": "^10.12.20",
+    "@types/jest": "^24.0.13",
+    "@types/lodash": "^4.14.134",
+    "@types/node": "^12.0.8",
     "chai": "^4.2.0",
-    "commitizen": "^3.0.5",
-    "conventional-changelog": "^2.0.3",
-    "conventional-changelog-cli": "^2.0.11",
-    "husky": "^1.3.1",
-    "jest": "^23.6.0",
+    "commitizen": "^3.1.1",
+    "conventional-changelog": "^3.1.8",
+    "conventional-changelog-cli": "^2.0.21",
+    "husky": "^2.4.1",
+    "jest": "^24.8.0",
     "jest-spin-reporter": "^1.0.2",
-    "lint-staged": "^8.1.1",
+    "lint-staged": "^8.2.0",
     "lodash": "^4.17.11",
+    "nanoid": "^2.0.3",
     "npm-run-all": "^4.1.5",
-    "prettier": "^1.16.2",
+    "prettier": "^1.18.2",
     "shx": "^0.3.2",
-    "ts-jest": "^23.10.5",
-    "ts-node": "^7.0.1",
-    "tslint": "^5.12.1",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.2.0",
+    "tslint": "^5.17.0",
     "tslint-no-unused-expression-chai": "0.1.4",
-    "typescript": "^3.2.4"
+    "typescript": "^3.5.1"
   },
   "dependencies": {
     "getroot": "^1.0.0",
-    "nanoid": "^1.3.4",
-    "tslib": "^1.9.3",
     "unixify": "^1.0.0"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=10"
   },
   "husky": {
     "hooks": {
