@@ -1,3 +1,12 @@
+## [3.0.1](https://github.com/kwonoj/emscripten-wasm-loader/compare/v3.0.0...v3.0.1) (2019-06-12)
+
+
+### Features
+
+* **baseasmmodule:** update types ([6b29049](https://github.com/kwonoj/emscripten-wasm-loader/commit/6b29049))
+
+
+
 # [3.0.0](https://github.com/kwonoj/emscripten-wasm-loader/compare/v2.2.3...v3.0.0) (2019-06-12)
 
 BREAKING CHANGES: targeting es2018 for output

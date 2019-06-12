@@ -32,11 +32,9 @@ interface AsmModule {
   cwrap: cwrapSignature;
   FS: FS;
   stringToUTF8: stringToUTF8Signature;
-  stackAlloc: (length: number) => number;
-  stackSave: () => number;
-  stackRestore: (stack: number) => void;
   getValue: <T = any>(ptr: number, type: string, nosafe?: boolean) => T;
-  Pointer_stringify: (ptr: number) => string;
+  allocateUTF8: (str: string) => number;
+  UTF8ToString: (ptr: number) => string;
   _free: (ptr: number) => void;
   _malloc: (size: number) => number;
 }
