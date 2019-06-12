@@ -1,3 +1,7 @@
+# [3.0.0](https://github.com/kwonoj/emscripten-wasm-loader/compare/v2.2.3...v3.0.0) (2019-06-12)
+
+BREAKING CHANGES: targeting es2018 for output
+
 ## [2.2.3](https://github.com/kwonoj/emscripten-wasm-loader/compare/v2.2.2...v2.2.3) (2019-01-31)
 
 

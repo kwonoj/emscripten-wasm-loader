@@ -21,7 +21,7 @@ describe('getModuleLoader', () => {
 
     expect(runtimeModule.mock.calls).to.have.lengthOf(1);
     expect(factoryLoader.mock.calls).to.have.lengthOf(1);
-    expect(factoryLoader.mock.calls[0][0]).to.deep.equal(mockRuntime);
+    expect((factoryLoader.mock.calls[0] as any)[0]).to.deep.equal(mockRuntime);
 
     expect(loaded).to.equal('boo');
   });
