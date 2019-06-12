@@ -2,7 +2,6 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/la7qsyfmoekernj7/branch/master?svg=true)](https://ci.appveyor.com/project/kwonoj/emscripten-wasm-loader/branch/master)
 [![codecov](https://codecov.io/gh/kwonoj/emscripten-wasm-loader/branch/master/graph/badge.svg)](https://codecov.io/gh/kwonoj/emscripten-wasm-loader)
 [![npm](https://img.shields.io/npm/v/emscripten-wasm-loader.svg)](https://www.npmjs.com/package/emscripten-wasm-loader)
-[![Greenkeeper badge](https://badges.greenkeeper.io/kwonoj/emscripten-wasm-loader.svg)](https://greenkeeper.io/)
 
 # Emscripten-wasm-loader
 
