@@ -1,3 +1,12 @@
+## [3.0.2](https://github.com/kwonoj/emscripten-wasm-loader/compare/v3.0.1...v3.0.2) (2019-06-13)
+
+
+### Bug Fixes
+
+* **mountbuffer:** fix dependencies ([911c8b7](https://github.com/kwonoj/emscripten-wasm-loader/commit/911c8b7))
+
+
+
 ## [3.0.1](https://github.com/kwonoj/emscripten-wasm-loader/compare/v3.0.0...v3.0.1) (2019-06-12)
 
 
