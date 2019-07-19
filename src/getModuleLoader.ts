@@ -62,7 +62,12 @@ const getModuleLoader: getModuleLoaderType = <T, R extends AsmRuntimeType>(
 
   try {
     const asmModule = runtimeModule(constructedModule);
-    await asmModule.initializeRuntime(timeout);
+    const result = await asmModule.initializeRuntime(timeout);
+
+    if (!result) {
+      log(`loadModule: failed to initialize runtime in time`);
+      throw new Error(`Timeout to initialize runtime`);
+    }
 
     log(`loadModule: initialized wasm binary Runtime`);
 
