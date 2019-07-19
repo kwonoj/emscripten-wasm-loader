@@ -1,3 +1,12 @@
+## [3.0.3](https://github.com/kwonoj/emscripten-wasm-loader/compare/v3.0.2...v3.0.3) (2019-07-19)
+
+
+### Bug Fixes
+
+* **getmoduleloader:** raise exception when init timeout occurs ([6169bb3](https://github.com/kwonoj/emscripten-wasm-loader/commit/6169bb3))
+
+
+
 ## [3.0.2](https://github.com/kwonoj/emscripten-wasm-loader/compare/v3.0.1...v3.0.2) (2019-06-13)
 
 
