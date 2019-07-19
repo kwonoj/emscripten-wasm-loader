@@ -45,11 +45,30 @@ describe('getModuleLoader', () => {
   it('should accept init options', async () => {
     mockIsNode.mockReturnValueOnce(true);
 
-    const mockRuntime = jest.fn();
+    const mockRuntime = jest.fn(() => Promise.resolve(true));
     const runtimeModule = jest.fn(() => ({ initializeRuntime: mockRuntime }));
 
     const loader = getModuleLoader(jest.fn() as any, runtimeModule, null as any, { timeout: 1000 });
     loader();
-    expect(mockRuntime.mock.calls[0][0]).to.equal(1000);
+
+    expect((mockRuntime.mock.calls as any)[0][0]).to.equal(1000);
+  });
+
+  it('should throw when init timeout', async () => {
+    mockIsNode.mockReturnValueOnce(true);
+
+    const mockRuntime = jest.fn(() => Promise.resolve(false));
+    const runtimeModule = jest.fn(() => ({ initializeRuntime: mockRuntime }));
+
+    const loader = getModuleLoader(jest.fn() as any, runtimeModule, null as any, { timeout: 1000 });
+
+    let thrown = false;
+    try {
+      await loader();
+    } catch (_e) {
+      thrown = true;
+    } finally {
+      expect(thrown).to.be.true;
+    }
   });
 });
