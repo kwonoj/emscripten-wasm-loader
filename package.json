@@ -1,6 +1,6 @@
 {
   "name": "emscripten-wasm-loader",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "Common interface to load wasm module into isomorphic environment",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -8,11 +8,6 @@
   "browser": {
     "./dist/cjs/path/mountDirectory.js": "./dist/cjs/path/mountBuffer.js",
     "./dist/esm/path/mountDirectory.js": "./dist/esm/path/mountBuffer.js"
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
   },
   "lint-staged": {
     "*.ts": [
@@ -28,7 +23,6 @@
     "lint:staged": "lint-staged",
     "build": "tsc -b --verbose ./src/tsconfig.cjs.json ./src/tsconfig.esm.json ./src/tsconfig.types.json ./spec/tsconfig.json",
     "build:clean": "shx rm -rf ./dist",
-    "commit": "git-cz -S",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "repository": {
@@ -42,33 +36,32 @@
   },
   "homepage": "https://github.com/kwonoj/emscripten-wasm-loader#readme",
   "devDependencies": {
-    "@commitlint/cli": "^8.0.0",
-    "@commitlint/config-angular": "^8.0.0",
-    "@types/chai": "^4.1.7",
-    "@types/jest": "^24.0.13",
-    "@types/lodash": "^4.14.134",
-    "@types/node": "^12.0.8",
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-angular": "^8.2.0",
+    "@types/chai": "^4.2.4",
+    "@types/jest": "^24.0.19",
+    "@types/lodash": "^4.14.144",
+    "@types/node": "^12.11.6",
     "chai": "^4.2.0",
-    "commitizen": "^3.1.1",
-    "conventional-changelog": "^3.1.8",
-    "conventional-changelog-cli": "^2.0.21",
-    "husky": "^2.4.1",
-    "jest": "^24.8.0",
+    "conventional-changelog": "^3.1.12",
+    "conventional-changelog-cli": "^2.0.25",
+    "husky": "^2.7.0",
+    "jest": "^24.9.0",
     "jest-spin-reporter": "^1.0.2",
-    "lint-staged": "^8.2.0",
-    "lodash": "^4.17.11",
+    "lint-staged": "^8.2.1",
+    "lodash": "^4.17.15",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.18.2",
     "shx": "^0.3.2",
-    "ts-jest": "^24.0.2",
-    "ts-node": "^8.2.0",
-    "tslint": "^5.17.0",
+    "ts-jest": "^24.1.0",
+    "ts-node": "^8.4.1",
+    "tslint": "^5.20.0",
     "tslint-no-unused-expression-chai": "0.1.4",
-    "typescript": "^3.5.1"
+    "typescript": "^3.6.4"
   },
   "dependencies": {
     "getroot": "^1.0.0",
-    "nanoid": "^2.0.3",
+    "nanoid": "^2.1.5",
     "unixify": "^1.0.0"
   },
   "engines": {
