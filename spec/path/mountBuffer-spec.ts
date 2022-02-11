@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import * as nanoid from 'nanoid';
+import { nanoid } from 'nanoid';
 import { isMounted } from '../../src/path/isMounted';
 import { mountBuffer } from '../../src/path/mountBuffer';
 

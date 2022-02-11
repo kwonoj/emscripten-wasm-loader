@@ -1,4 +1,4 @@
-import * as nanoid from 'nanoid';
+import { nanoid } from 'nanoid';
 import { FS } from '../BaseAsmModule';
 import { log } from '../util/logger';
 import { isMounted } from './isMounted';
